@@ -1,0 +1,12 @@
+.img_banner_logo {
+    height: 45px;
+	width: 145px;
+    margin-left: 8vw;
+    filter: invert(40%);
+}
+
+@media screen and (min-width: 1024px) {
+.img_banner_logo {
+    margin-left:  0;
+}
+}

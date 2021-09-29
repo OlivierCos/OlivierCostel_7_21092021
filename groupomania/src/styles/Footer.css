@@ -1,0 +1,15 @@
+h4 {
+text-align: center;
+margin-top:0;
+color: #FD2D01FF ;
+opacity: 60%;
+}
+
+.img_footer_logo {
+    height: 145px;
+	width: 145px;
+    text-align:center;
+    margin: 0 auto;
+    display:flex;
+    margin-bottom: -30px;
+}
