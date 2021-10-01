@@ -1,11 +1,14 @@
-const Post = require('../models/post.js');
 const fs = require('fs');
+const models = require('../models');
 
 exports.createPost = (req, res, next) => {
-    const postObject = JSON.parse(req.body.post);
-    delete postObject._id;
-    const post = new Post({ ...postObject    });
-    post.save()
+      models.Post.create({
+      idUSERS: req.body.UserId,
+      title: req.body.title,
+      gif: req.body.gif,
+      description: req.body.description,
+    })
+
       .then(() => res.status(201).json({ message: 'Post enregistré !'}))
       .catch(error => res.status(400).json({ error }));
 };
@@ -50,7 +53,7 @@ exports.getOnePost = (req, res, next) => {
 };
 
 exports.getAllPost = (req, res, next) => {
-    Post.find()
+    models.Post.find()
     .then(posts => res.status(200).json(posts))
     .catch(error => res.status(400).json({ error }));
   };

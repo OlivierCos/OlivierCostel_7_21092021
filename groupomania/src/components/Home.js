@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from "react";
 
 function Home() {
-    const [setPosts, getPosts] = useState([]);
+    const setPosts = useState([]);
     useEffect ( () => {
-        fetch("http://localhost:3000/post/", {
+        fetch("http://localhost:3000/api/posts/", {
             headers: { 
                 'Content-Type': 'application/json',
             },
         })
-        .then(res => {
-            getPosts(res.data)
-        })
+
+        .then(data => data.json())
         .catch( (error) => {
             alert(error);
         })
@@ -26,7 +25,7 @@ function Home() {
                     </div>
                     <img className="post_gif" src={post.gif} alt=""/>
                     <div className="post_body">
-                        {post.content}
+                        {post.description}
                     </div>
                     <br></br>
                     <div className="post_date">

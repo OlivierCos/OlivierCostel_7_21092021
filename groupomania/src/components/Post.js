@@ -1,30 +1,27 @@
 import React, { useState } from "react";
-import {useHistory} from 'react-router-dom';
  
 function Post() {
-    let history = useHistory();
     const [title, newTitle] = useState("")
-    const [comment, newComment] = useState("")
+    const [description, newDescription] = useState("")
     const [gif, newGif] = useState()
  
     const handleSubmit = e => {
         e.preventDefault()
+
+        const data = {title: title, description: description, gif: gif } 
+
+
  
-        const data = new FormData();
-        data.append('gif', gif);
-        data.append('title', title);
-        data.append('comment', comment);
-        data.append('userId', localStorage.getItem("userId"));
- 
-        fetch("http://localhost:3000/post/", data, {
+        fetch("http://localhost:3000/api/posts/", {
             method: 'POST',
             body: data,
             headers: {
-                "Content-Type": "multipart/form-data",
+                "Content-Type": "application/json",
             },
           })
-        .then(res => {
-            history.push('/home');
+        .then((res) => res.json())
+        .then(() => {
+            window.location.href ='/home';
         })
         .catch( (error) => {
             alert(error.response.data.error)
@@ -42,9 +39,9 @@ function Post() {
                         <input className="input-form" placeholder="Inscrivez votre titre" maxLength="30" type="text" id="title" name="title" value={title} onChange={e => newTitle(e.target.value)}/>
                     </div>
                     <div>
-                        <label htmlFor="comment">Commentaire : </label>
+                        <label htmlFor="description">Commentaire : </label>
                         <br></br>
-                        <textarea className="input-form-comment" placeholder="Inscrivez votre texte" maxLength="250" type="text" id="comment" name="comment" value={comment} onChange={e => newComment(e.target.value)}/>
+                        <textarea className="input-form-description" placeholder="Inscrivez votre texte" maxLength="250" type="text" id="comment" name="comment" value={description} onChange={e => newDescription(e.target.value)}/>
                     </div>
                     <div>
                         <label htmlFor="gif">Gif : </label>

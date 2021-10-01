@@ -1,24 +1,26 @@
 import React, { useState } from "react";
-import {useHistory} from 'react-router-dom';
 
 function Signup() {
-    let history = useHistory();
-    const [nom, newNom] = useState("")
+    const [firstName, newFirstName] = useState("")
+    const [lastName, newLastName] = useState("")
     const [email, newEmail] = useState("")
-    const [pass, newPass] = useState("")
+    const [password, newPassword] = useState("")
+    const [image, newImage] = useState("")
 
-    const undleSubmit = e => {
+
+    const handleSubmit = e => {
         e.preventDefault()
-        const data = {name: nom, email: email, password: pass} 
+        const data = {firstName: firstName, lastName: lastName, email: email, password: password, image: image} 
 
-        fetch("http://localhost:3000/signup", {
+        fetch("http://localhost:3000/api/users/signup", {
             method: 'POST',
-            body: data,
+            body: JSON.stringify(data),
             headers: { 'Content-Type': 'application/json' },
           })
-        .then(res => { 
-            history.push('/login')
-        })
+          .then((res) => res.json())
+          .then(() => {
+            window.location.href = "/login";
+          })
         .catch( (error) => {
             error(error.response.data.error)
         })
@@ -26,13 +28,18 @@ function Signup() {
 
     return(
         <div className="app_body">
-            <form onSubmit={e => undleSubmit(e)} className="app_signup">
+            <form onSubmit={e => handleSubmit(e)} className="app_signup">
                 <h1>Inscription</h1>
                 <div className="app_signup_form">
                     <div>
-                        <label htmlFor="name">Pseudo : </label>
+                        <label htmlFor="firstName">Prénom : </label>
                         <br></br>
-                        <input className="input-form" placeholder="Inscrivez votre pseudo" type="text" id="name" value={nom} onChange={e => newNom(e.target.value)}/>
+                        <input className="input-form" placeholder="Inscrivez votre prénom" type="text" id="firstName" value={firstName} onChange={e => newFirstName(e.target.value)}/>
+                    </div>
+                    <div>
+                        <label htmlFor="lastName">Nom : </label>
+                        <br></br>
+                        <input className="input-form" placeholder="Inscrivez votre nom de famille" type="text" id="lastName" value={lastName} onChange={e => newLastName(e.target.value)}/>
                     </div>
                     <div>
                         <label htmlFor="email">Email : </label>
@@ -42,7 +49,12 @@ function Signup() {
                     <div>
                         <label htmlFor="password">Mot de passe : </label>
                         <br></br>
-                        <input className="input-form" placeholder="Inscrivez votre Mot de passe" type="password" id="password" value={pass} onChange={e => newPass(e.target.value)}/>
+                        <input className="input-form" placeholder="Inscrivez votre Mot de passe" type="password" id="password" value={password} onChange={e => newPassword(e.target.value)}/>
+                    </div>
+                    <div>
+                        <label htmlFor="image">Image : </label>
+                        <br></br>
+                        <input className="input-form" type="text" id="image" value={image} onChange={e => newImage(e.target.value)}/>
                     </div>
                 </div>
                 <button className="connexion-button">S'inscrire</button>

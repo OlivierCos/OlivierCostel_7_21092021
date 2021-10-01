@@ -9,11 +9,8 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       idUSERS: {
-        allowNull: false,
+        allowNull: true,
         type: Sequelize.STRING,
-        references: {
-          model: 'Users'
-        }
       },
       title: {
         allowNull: false,

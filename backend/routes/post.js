@@ -8,8 +8,8 @@ const multer = require('../middleware/multer-config.js'); // Middleware pour la 
 
 const postCtrl = require('../controllers/post.js'); // On associe les fonctions aux différentes routes en important le controller
 
-router.get('/', auth, postCtrl.getAllPost);
-router.post('/', auth, multer, postCtrl.createPost);
+router.get('/', postCtrl.getAllPost);
+router.post('/', postCtrl.createPost);
 router.get('/:id', auth, postCtrl.getOnePost);
 router.put('/:id', auth, multer, postCtrl.modifyPost);
 router.delete('/:id', auth, postCtrl.deletePost);

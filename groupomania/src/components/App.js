@@ -20,7 +20,8 @@ function App() {
 			<Router history={history}>
 			<Banner>
 			</Banner>
-				<Route path='/' exact component={Home}/>
+				<Route path='/' exact component={Login}/>
+				<Route path='/home' exact component={Home}/>
 				<Route path='/login' exact component={Login}/>
 				<Route path='/signup' exact component={Signup}/>
 				<Route path='/post' exact component={Post}/>

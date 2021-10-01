@@ -1,25 +1,27 @@
-const User = require('../models/user.js');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const models = require('../models');
+
 
 
 exports.signup = (req, res, next) => {
     bcrypt.hash(req.body.password, 10)
     .then(hash => {
-      const user = new User({
+   models.User.create({
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
         email: req.body.email,
-        password: hash
-      });
-      user.save()
-        .then(() => res.status(201).json({ message: 'Utilisateur créé !' }))
-        .catch(error => res.status(400).json({ error }));
+        password: hash,
+        image:req.body.image
+      })
+      .then(() => res.status(201).json({ message: 'Utilisateur créé !' }))
+      .catch(error => res.status(403).json({ error }));
     })
     .catch(error => res.status(500).json({ error }));
 };
 
 exports.login = (req, res, next) => {
-  // console.dir(req.headers.authorization);
-    User.findOne({ email: req.body.email })
+    models.User.findOne({ where: { email: req.body.email } })
           .then(user => {
             if (!user) {
               return res.status(401).json({ error: 'Utilisateur non trouvé !' });
@@ -30,10 +32,10 @@ exports.login = (req, res, next) => {
                   return res.status(401).json({ error: 'Mot de passe incorrect !' });
                 }
                 res.status(200).json({
-                  userId: user._id,
+                  userId: user.id,
                   token: jwt.sign(
-                    { userId: user._id },
-                    'RANDOM_TOKEN',
+                    { userId: user.id },
+                    process.env.TOKEN,
                     { expiresIn: '24h' }
                   )
                 });
