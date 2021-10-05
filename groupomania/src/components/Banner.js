@@ -4,9 +4,9 @@ import { Link } from 'react-router-dom';
 
 function Banner() {
 	return <div className='banner'>
-		<img src={logos} alt='logo-groupomania' className='img_banner_logo' />
-					<button><Link to="/Login">Connexion</Link></button>
-					</div>
+				<img src={logos} alt='logo-groupomania' className='img_banner_logo' />
+				<button className='btn_connection'><Link to="/Login">Connexion</Link></button>
+			</div>
 }
 
 export default Banner

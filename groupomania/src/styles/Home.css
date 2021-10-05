@@ -1,0 +1,10 @@
+.app_body{
+    width : 70%;
+    margin: 0 auto;
+}
+
+.app_post {
+    border: solid 2px black;
+    border-radius: 50px;
+    padding: 0.4rem 0.8rem;
+  }

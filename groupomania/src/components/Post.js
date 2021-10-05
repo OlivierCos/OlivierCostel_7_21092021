@@ -3,28 +3,26 @@ import React, { useState } from "react";
 function Post() {
     const [title, newTitle] = useState("")
     const [description, newDescription] = useState("")
-    const [gif, newGif] = useState()
+    const [gif, newGif] = useState("")
  
     const handleSubmit = e => {
         e.preventDefault()
-
-        const data = {title: title, description: description, gif: gif } 
-
-
+        const userId = localStorage.getItem('userId')
+        const data = {title: title, description: description, gif: gif, userId: userId } 
  
         fetch("http://localhost:3000/api/posts/", {
             method: 'POST',
-            body: data,
+            body: JSON.stringify(data),
             headers: {
-                "Content-Type": "application/json",
+                'Content-Type': 'application/json',
             },
           })
         .then((res) => res.json())
-        .then(() => {
-            window.location.href ='/home';
-        })
+        // .then(() => {
+        //     window.location.href ='/home';
+        // })
         .catch( (error) => {
-            alert(error.response.data.error)
+            alert(error)
         })
     }
  
@@ -46,7 +44,7 @@ function Post() {
                     <div>
                         <label htmlFor="gif">Gif : </label>
                         <br></br>
-                        <input className="input-form" type="url" id="gif" name="gif" onChange={e => newGif(e.target.value)}/>
+                        <input className="input-form" type="url" id="gif" name="gif" value={gif} onChange={e => newGif(e.target.value)}/>
                     </div>
                 </div>
                 <button className="connexion-button">Ajouter le post !</button>

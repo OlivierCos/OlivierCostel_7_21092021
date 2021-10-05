@@ -22,7 +22,7 @@ function Signup() {
             window.location.href = "/login";
           })
         .catch( (error) => {
-            error(error.response.data.error)
+            error(error.response.error)
         })
     }
 

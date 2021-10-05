@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+// import {useHistory} from 'react-router-dom';
 
 function Login() {
+    // let history = useHistory();
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
 
@@ -10,10 +12,15 @@ function Login() {
         fetch("http://localhost:3000/api/users/login", {
             method: 'POST',
             body: JSON.stringify(data),
-            headers: { 'Content-Type': 'application/json'},
-          })
-          .then(res => res.data.token)
-
+            headers: { 'Content-Type': 'application/json'}
+        })
+        .then(res => res.json())
+        .then(
+            (res) => {
+                console.log(res)
+                localStorage.setItem('token', res.token);
+                localStorage.setItem('userId', res.userId);
+            })
           .then(() => {
             window.location.href = "/home";
         })

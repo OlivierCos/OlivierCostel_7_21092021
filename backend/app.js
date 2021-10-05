@@ -4,6 +4,8 @@ const helmet = require('helmet'); // utilisation du module 'helmet' pour la séc
 const { Sequelize } = require('sequelize');
 const postRoutes = require('./routes/post.js');
 const userRoutes = require('./routes/user.js');
+const commentRoutes = require('./routes/comment.js');
+
 
 // utilisation du module 'dotenv' pour masquer les informations de connexion à la base de données à l'aide de variables d'environnement
 require('dotenv').config();
@@ -41,6 +43,7 @@ app.use(helmet());
 
 app.use('/images', express.static(path.join(__dirname, 'images'))); // Gestion de l'image de façon statique, pour que le client télécharge les images du server
 app.use('/api/posts', postRoutes);
+app.use('/api/comments', commentRoutes);
 app.use('/api/users', userRoutes);
 
 // Export de l'application express pour déclaration dans server.js

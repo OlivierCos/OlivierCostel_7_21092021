@@ -2,6 +2,7 @@ const multer = require('multer'); // Multer permet de gérer les fichiers entran
 
 // On crée our définire le format des images
 const MIME_TYPES = {
+  'image/gif': 'gif',
   'image/jpg': 'jpg',
   'image/jpeg': 'jpg',
   'image/png': 'png',
