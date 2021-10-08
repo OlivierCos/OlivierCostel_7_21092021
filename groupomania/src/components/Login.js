@@ -1,3 +1,4 @@
+import '../styles/Login.css';
 import React, { useState } from "react";
 // import {useHistory} from 'react-router-dom';
 
@@ -19,7 +20,6 @@ function Login() {
             (res) => {
                 console.log(res)
                 localStorage.setItem('token', res.token);
-                localStorage.setItem('userId', res.userId);
             })
           .then(() => {
             window.location.href = "/home";

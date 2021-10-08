@@ -1,13 +1,17 @@
+.body_app{
+    font-family: "Montserrat", sans-serif;
+}
+
 @media screen and (min-width: 1024px) {
     .body_app{
         margin: 0 auto;
-        width:60%
+        width:100%
     }
 }
 
 @media screen and (min-width:1440px) {
     .body_app{
         width: 100%;
-        max-width: 1260px;
+        max-width: none;
     }
 }

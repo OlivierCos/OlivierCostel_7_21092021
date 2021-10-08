@@ -5,8 +5,8 @@ const auth = require('../middleware/auth.js'); // Middleware pour sécuriser les
 
 const commentCtrl = require('../controllers/comment.js'); // On associe les fonctions aux différentes routes en important le controller
 
-router.get('/', commentCtrl.getAllComment);
-router.post('/', commentCtrl.createComment);
+router.get('/', auth, commentCtrl.getAllComment);
+router.post('/:id', auth, commentCtrl.createComment);
 router.put('/:id', auth, commentCtrl.modifyComment);
 router.delete('/:id', auth, commentCtrl.deleteComment);
 

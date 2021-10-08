@@ -1,0 +1,11 @@
+.app_loggin{
+    width : 300px;
+    margin: 0 auto;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.app_loggin h1{
+    align-items: center;
+}

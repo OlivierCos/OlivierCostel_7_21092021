@@ -1,9 +1,13 @@
 const fs = require('fs');
 const models = require('../models');
+const jwt = require('jsonwebtoken');
 
 exports.createPost = (req, res, next) => {
+  const token = req.headers.authorization.split(' ')[1];
+  const decodedToken = jwt.verify(token, 'RANDOM'); // On vérifie le token décodé avec la clé secrète (créée dans Controller/User)
+  const userId = decodedToken.userId;
       models.Post.create({
-      UserId : req.body.userId,
+      UserId : userId,
       title: req.body.title,
       gif: req.body.gif,
       description: req.body.description,
@@ -33,18 +37,16 @@ exports.modifyPost = (req, res, next) => {
 }
 
 exports.deletePost = (req, res, next) => {
-    Post.findOne({ _id: req.params.id })
-      .then(post => {
-        const filename = post.imageUrl.split('/images/')[1];
-        fs.unlink(`images/${filename}`, () => {
-          Post.deleteOne({ _id: req.params.id })
-            .then(() => res.status(200).json({ message: 'Objet supprimé !'}))
-            .catch(error => res.status(400).json({ error }));
-        });
-      })
-      .catch(error => res.status(500).json({ error }));
-  };
-
+  const token = req.headers.authorization.split(' ')[1];
+  const decodedToken = jwt.verify(token, 'RANDOM'); // On vérifie le token décodé avec la clé secrète (créée dans Controller/User)
+  const userId = decodedToken.userId;
+  models.Comment.destroy({ where: { PostId: req.params.id }})
+  models.Post.destroy({ where: { 
+    id: req.params.id,
+    UserId: userId }})
+  .then(() => res.status(200).json({ message: 'Post supprimé !'}))
+  .catch((error) => res.status(400).json({ error }));
+};
 exports.getOnePost = (req, res, next) => {
     Post.findOne({ _id: req.params.id })
       .then(post => res.status(200).json(post))
@@ -52,7 +54,9 @@ exports.getOnePost = (req, res, next) => {
 };
 
 exports.getAllPost = (req, res, next) => {
-    models.Post.findAll()
+    models.Post.findAll({    order: [[
+      "createdAt", "DESC"
+    ]]})
     .then(posts => res.status(200).json(posts))
     .catch(error => res.status(400).json({ error }));
   };

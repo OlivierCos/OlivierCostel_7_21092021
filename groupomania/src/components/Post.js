@@ -5,22 +5,22 @@ function Post() {
     const [description, newDescription] = useState("")
     const [gif, newGif] = useState("")
  
-    const handleSubmit = e => {
+    const addPost = e => {
         e.preventDefault()
-        const userId = localStorage.getItem('userId')
-        const data = {title: title, description: description, gif: gif, userId: userId } 
+        const data = {title: title, description: description, gif: gif } 
  
         fetch("http://localhost:3000/api/posts/", {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {
+                Authorization:'Bearer '+localStorage.getItem('token'),
                 'Content-Type': 'application/json',
             },
           })
         .then((res) => res.json())
-        // .then(() => {
-        //     window.location.href ='/home';
-        // })
+        .then(() => {
+            window.location.href ='/home';
+        })
         .catch( (error) => {
             alert(error)
         })
@@ -28,7 +28,7 @@ function Post() {
  
     return(
         <div className="app_body">
-            <form onSubmit={e => handleSubmit(e)} className="app_post">
+            <form onSubmit={e => addPost(e)} className="app_post">
                 <h1>Poster un Gif :</h1>
                 <div className="app_post_form">
                     <div>

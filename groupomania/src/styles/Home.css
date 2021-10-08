@@ -4,7 +4,89 @@
 }
 
 .app_post {
+    max-width: 600px;
     border: solid 2px black;
     border-radius: 50px;
     padding: 0.4rem 0.8rem;
+    margin : 2rem auto;
+    background-color: rgb(255, 249, 249);
   }
+
+li{
+    list-style-type: none;
+}
+
+.post_title{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 0 2rem;
+    align-items: center;
+}
+
+.post_title p, .post_date{
+    font-size: 0.7rem;
+}
+.post_gif{
+    display: flex;
+    margin: 0 auto;
+    max-width: 450px;
+    border-radius: 1rem;
+    margin-bottom: 1rem ;
+}
+.post_body{
+text-align: center;
+}
+.post_date{
+text-align: right;
+padding-right: 2rem;
+}
+.revome_post_btn{
+    margin-top: 0.6rem;
+}
+.input_form_comment{
+    width: 25vw;
+    border-radius: 1rem;
+    padding: 0.1rem 0.5rem;
+    font-family: "Montserrat", sans-serif;
+    border : solid 2px #FE8167FF;
+    background-color: transparent;
+    color: black;
+    outline: none;
+}
+
+.add_comment {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    margin-top: 1rem;
+}
+.display_comment{
+align-items: center;
+}
+.display_comment p{
+font-weight: 600;
+}
+.comment_date{
+    font-weight: 400;
+}
+.comment_name, .comment_date {
+    margin:0
+}
+.comment_body {
+    margin : 0.4rem 0 0.8rem 0;
+}
+.comments{
+    margin-top: 1rem;
+}
+.add_comment_btn, .revome_post_btn{
+    color: #FE8167FF;
+    background-color: rgb(255, 236, 236);
+}
+.add_comment_btn:hover, .revome_post_btn:hover{
+    color: black;
+}
+/* .add_comment div, .add_comment button{
+    display: inline-block;
+} */
