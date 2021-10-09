@@ -1,0 +1,35 @@
+.add_post_h1 {
+    color: #FE8167FF;
+}
+
+.app_add_post{
+    text-align: center;
+    margin-top : 4rem;
+}
+
+.app_post_form{
+    display: flex;
+    flex-direction: column;
+}
+.btn_add_post{
+    font-family: "Montserrat", sans-serif;
+    margin: 2rem 0;
+}
+.add_post_description, .add_post_title, .add_post_gif{
+    margin : 1rem 1rem 0.5rem 0;
+}
+.input_form{
+    border-radius: 1rem;
+    padding: 0.1rem 0.5rem;
+    font-family: "Montserrat", sans-serif;
+    border : solid 2px #FE8167FF;
+    color: black;
+    outline: none;
+    width: 70%;
+    align-self: center;
+    text-align: center;
+}
+
+.input_form_title{
+    width:50%;
+}

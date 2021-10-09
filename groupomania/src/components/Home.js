@@ -65,7 +65,7 @@ function Home() {
 
     return (
         <div className='home_page'>
-        <button className='btn btn_add_post'><Link to="/post">Publier un gif</Link></button>
+        <button className='btn btn_link_post'><Link to="/post">Publier un gif</Link></button>
         <ul className="app_body">
             { listPosts.map( (post, id) => {
                 return <li key={id} className="app_post">
@@ -78,7 +78,9 @@ function Home() {
                         Légende : {post.description}
                     </div>
                     <div className="post_date">
-                        <button onClick={ (post.UserId === localStorage.getItem('userId')) ? e => deletePost(e, post.id) : undefined } className="btn revome_post_btn">Supprimer votre publication </button>
+                        {/* <div id={if (post.PostId === localStorage.getItem('userId')) {'revome_post_btn'}}> */}
+                            <button id="remove_post_btn" onClick={ e => deletePost(e, post.id) } className="btn revome_post_btn">Supprimer votre publication </button>
+                        {/* </div> */}
                         <p>Post créé le {post.createdAt.slice(0,10)}</p>
                     </div>
                     <form onSubmit={e => addComment(e, post.id)} className="add_comment">

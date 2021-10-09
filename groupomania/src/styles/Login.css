@@ -1,11 +1,34 @@
-.app_loggin{
-    width : 300px;
+.app_login_form{
+    width : 400px;
     margin: 0 auto;
     display:flex;
     flex-direction: column;
     align-items: center;
 }
-
-.app_loggin h1{
+.app_body_login{
+    display:flex;
+    flex-direction: column;
     align-items: center;
+    text-align: center;
+}
+
+.app_login h1{
+    align-items: center;
+}
+
+.btn_login_form{
+    color: #FE8167FF;
+    font-family: "Montserrat", sans-serif;
+    margin: 2rem 0;
+}
+.btn_login_form:hover{
+    color:black;
+    transition: 500ms;
+    transform: scale(1.1);
+}
+.app_login_form input{
+    padding: 0.2rem 0;
+}
+.label_login_form{
+    padding: 1.5rem 0 0.6rem 0;
 }

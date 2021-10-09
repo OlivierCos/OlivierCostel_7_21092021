@@ -1,4 +1,6 @@
 .banner {
+    display: flex;
+    justify-content: space-between;
     width: 100%;
     margin: 0 auto;
     background-color: rgb(255, 236, 236);
@@ -8,7 +10,6 @@
     padding: 0 3rem;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
     align-items: center;
 }
 a {
@@ -39,7 +40,12 @@ a {
     background-color: #FE8167FF;
   }
 
+  .btn_disconnect{
+      margin-left: 3rem;
+  }
+
 .img_banner_logo {
+    padding-left: 3vw;
     height: 45px;
 	width: 145px;
 }
