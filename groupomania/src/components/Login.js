@@ -1,9 +1,7 @@
 import '../styles/Login.css';
 import React, { useState } from "react";
-// import {useHistory} from 'react-router-dom';
 
 function Login() {
-    // let history = useHistory();
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
 

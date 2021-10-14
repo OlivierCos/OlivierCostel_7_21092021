@@ -8,18 +8,19 @@ function Signup() {
     const [email, newEmail] = useState("")
     const [password, newPassword] = useState("")
     const [image, newImage] = useState("")
-    const [nameErr, setNameErr] = useState(false);
+    const [firstNameErr, setFirstNameErr] = useState(false);
+    const [lastNameErr, setLastNameErr] = useState(false);
     const [pwdErr, setPwdErr] = useState(false);
     const [emailErr, setEmailErr] = useState(false);
     const validate = () => {
         console.log(firstName);
         let isValid = true;
         if (!validName.test(firstName)) {
-           setNameErr(true);
+           setFirstNameErr(true);
            isValid = false;
         }
         if (!validName.test(lastName)) {
-            setNameErr(true);
+            setLastNameErr(true);
             isValid = false;
          }
         if (!validPassword.test(password)) {
@@ -61,19 +62,23 @@ function Signup() {
                 <div className="app_login_form">
                         <label htmlFor="firstName" className="label_login_form">Prénom : </label>
                         <input className="input_form input_login_form" placeholder="Inscrivez votre prénom" type="text" id="firstName" value={firstName} onChange={e => newFirstName(e.target.value)}/>
+                        {firstNameErr && <p>Votre prénom est invalide</p>}
                         <label htmlFor="lastName" className="label_login_form">Nom : </label>
                         <input className="input_form input_login_form" placeholder="Inscrivez votre nom de famille" type="text" id="lastName" value={lastName} onChange={e => newLastName(e.target.value)}/>
+                        {lastNameErr && <p>Votre nom est invalide</p>}
                         <label htmlFor="email" className="label_login_form">Email : </label>
                         <input className="input_form input_login_form" placeholder="Inscrivez votre email" type="text" id="email" value={email} onChange={e => newEmail(e.target.value)}/>
+                        {emailErr && <p>Votre email est invalide</p>}
                         <label htmlFor="password" className="label_login_form">Mot de passe : </label>
                         <input className="input_form input_login_form" placeholder="Inscrivez votre Mot de passe" type="password" id="password" value={password} onChange={e => newPassword(e.target.value)}/>
+                        {pwdErr && <p>Votre mot de passe est invalide</p>}
                         <label htmlFor="image" className="label_login_form">Image : </label>
                         <input className="input_form input_login_form" type="text" id="image" value={image} onChange={e => newImage(e.target.value)}/>
                 </div>
                 <button className="btn btn_login_form">S'inscrire</button>
-                {emailErr && <p>Your email is invalid</p>}
-                {pwdErr && <p>Your password is invalid</p>}
-                {nameErr && <p>Your name is invalid</p>}
+
+                
+                
             </form>
         </div>
     );

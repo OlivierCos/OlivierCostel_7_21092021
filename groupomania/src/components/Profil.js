@@ -34,7 +34,8 @@ const deleteProfil = (e, id) => {
                         alert(error)
             })
         }
-//MOFIFY PROFIL        
+//MOFIFY PROFIL
+const [focusUser, setFocusUser] = useState(-1);        
 const [visible, setVisible] = useState(false);
 const [firstName, modifyFirstName] = useState("")
 const [lastName, modifyLastName] = useState("")
@@ -82,9 +83,8 @@ return (
                             <h4>{user.image}</h4>   
                         </div> 
                         <div className="profil_page_element profil_page_btn"> 
-                            <button onClick={() => setVisible(!visible)} className="btn revome_post_btn">{visible ? 'X' : 'Modifiez votre profil'} </button>
-                                {visible && 
-                                // <ModifyForm />
+                            <button onClick={() => {setVisible(!visible); setFocusUser(user.id)}} className="btn revome_post_btn">{visible ? 'X' : 'Modifiez votre profil'} </button>
+                                {visible && focusUser === user.id &&
                                 <form id="app_modify_post" onSubmit={e => modifyProfil(e, user.id)} className="app_post app_add_post">
                                     <h1 className="add_post_h1">Modifiez votre Profil :</h1>
                                     <div className="app_login_form">

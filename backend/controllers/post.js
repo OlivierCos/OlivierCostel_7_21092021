@@ -20,26 +20,22 @@ exports.modifyPost = async (req, res, next) => {
   const decodedToken = jwt.verify(token, process.env.TOKEN); // On vérifie le token décodé avec la clé secrète (créée dans Controller/User)
   const userId = decodedToken.userId;
   const user = await models.User.findOne({  where: { id: userId }});
-
   if (user.admin){
-    models.Post.update({  
-      title: req.body.title,
+    models.Post.update(
+      {title: req.body.title,
       gif: req.body.gif,
-      description: req.body.description }, {where: { id: req.params.id, UserId: userId }
-    })
+      description: req.body.description },
+      {where: { id: req.params.id, UserId: userId }})
     .then(() => res.status(200).json({ message: 'Post modifié !'}))
     .catch((error) => res.status(400).json({ error }));
   }
   else {
-    models.Post.findAll({ where: { id: req.params.id,
-      UserId: userId },
-    })
-   
-    .then(async() => {
-      await   models.Post.update({  
+    models.Post.findAll({ where: { id: req.params.id, UserId: userId }})
+    .then(async() => { await models.Post.update({  
         title: req.body.title,
         gif: req.body.gif,
-        description: req.body.description }, {where: { id: req.params.id, UserId: userId }
+        description: req.body.description }, 
+        {where: { id: req.params.id, UserId: userId }
       });
       res.status(200).json({ message: 'Post modifié !'})
     })
@@ -51,36 +47,27 @@ exports.deletePost = async (req, res, next) => {
   const decodedToken = jwt.verify(token, process.env.TOKEN); // On vérifie le token décodé avec la clé secrète (créée dans Controller/User)
   const userId = decodedToken.userId;
   const user = await models.User.findOne({  where: { id: userId }});
-
   if (user.admin){
     models.Comment.destroy({ where: { PostId: req.params.id }})
     models.Post.destroy({ where: { id: req.params.id}})
     .then(() => res.status(200).json({ message: 'Post supprimé !'}))
     .catch((error) => res.status(400).json({ error }));
   }
-  else {
-    models.Post.destroy({ where: { id: req.params.id,
-      UserId: userId },
-    })
-   
-    .then(async() => {
-      await models.Comment.destroy({ where: { PostId: req.params.id }});
+  else { models.Post.destroy({ where: { id: req.params.id, UserId: userId }})
+    .then(async() => { await models.Comment.destroy(
+      { where: { PostId: req.params.id }});
       res.status(200).json({ message: 'Post supprimé !'})
     })
     .catch((error) => res.status(400).json({ error }));
 }};
 
 exports.getAllPost = (req, res, next) => {
-    models.Post.findAll({  include: [
-      {
+    models.Post.findAll({  include: [{
         model: models.User,
-        attributes: ['firstName', 'lastName', 'id'],
-      },
-    ],
+        attributes: ['firstName', 'lastName', 'id']}],
     order: [[
       "createdAt", "DESC"
-    ]]
-  })
+    ]]})
     .then(posts => res.status(200).json(posts))
     .catch(error => res.status(400).json({ error }));
   };

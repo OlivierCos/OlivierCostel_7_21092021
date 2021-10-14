@@ -4,7 +4,7 @@ const auth = require('../middleware/auth.js'); // Middleware pour sécuriser les
 const router = express.Router();
 const userCtrl = require('../controllers/user.js');
 
-router.get('/', auth, userCtrl.getAllUser);
+router.get('/', auth, userCtrl.getOneUser);
 router.post('/signup', userCtrl.signup);
 router.post('/login', userCtrl.login);
 router.put('/:id', auth, userCtrl.modifyUser);
