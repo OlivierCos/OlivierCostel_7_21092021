@@ -1,12 +1,10 @@
-const fs = require('fs');
 const models = require('../models');
 const jwt = require('jsonwebtoken');
 
 exports.createComment = (req, res, next) => {
   const token = req.headers.authorization.split(' ')[1];
-  const decodedToken = jwt.verify(token, 'RANDOM'); // On vérifie le token décodé avec la clé secrète (créée dans Controller/User)
+  const decodedToken = jwt.verify(token, process.env.TOKEN); // On vérifie le token décodé avec la clé secrète (créée dans Controller/User)
   const userId = decodedToken.userId; 
-  console.log(decodedToken)
     models.Comment.create({
       PostId: req.params.id,
       UserId: userId,
@@ -16,21 +14,37 @@ exports.createComment = (req, res, next) => {
     .catch(error => res.status(400).json({ error }));
 };
 
-exports.modifyComment = (req, res, next) => {
-        models.Comment.updateOne({ _id: req.params.id })
-        .then(() => res.status(200).json({ message: 'Commentaire modifié !'}))
-        .catch(error => res.status(400).json({ error }))
-}
 
-exports.deleteComment = (req, res, next) => {
+exports.deleteComment = async (req, res, next) => {
+  const token = req.headers.authorization.split(' ')[1];
+  const decodedToken = jwt.verify(token, process.env.TOKEN); // On vérifie le token décodé avec la clé secrète (créée dans Controller/User)
+  const userId = decodedToken.userId;
+  const user = await models.User.findOne({  where: { id: userId }});
+
+  if (user.admin){
     models.Comment.destroy({ where: { id: req.params.id }})
-            .then(() => res.status(200).json({ message: 'Commentaire supprimé !'}))
-            .catch(error => res.status(400).json({ error }));
-  };
+    .then(() => res.status(200).json({ message: 'Commentaire supprimé !'}))
+    .catch((error) => res.status(400).json({ error }));
+  }
+  else {
+    models.Comment.destroy({ where: { id: req.params.id, UserId: userId }})
+      .then(() => res.status(200).json({ message: 'Commentaire supprimé !'}))
+      .catch((error) => res.status(400).json({ error }));
+}};
 
 
 exports.getAllComment = (req, res, next) => { 
-  models.Comment.findAll()
-    .then(comment => res.status(200).json(comment))
+  models.Comment.findAll({   
+    include: [
+    {
+      model: models.User,
+      attributes: ['firstName', 'lastName', 'id', 'image'],
+    },
+  ],
+  order: [[
+    "createdAt", "DESC"
+  ]]
+})
+    .then(comments => res.status(200).json(comments))
     .catch(error => res.status(400).json({ error }));
   };

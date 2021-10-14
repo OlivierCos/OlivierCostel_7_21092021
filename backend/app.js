@@ -13,10 +13,7 @@ require('dotenv').config();
 const app = express(); //  L'application utilise le framework express
 
 app.get('/', async function (req, res) {
-      const sequelize = new Sequelize('groupomania', 'root', '', {
-          host: 'localhost',
-          dialect: 'mysql'
-  });
+      const sequelize = new Sequelize(proces.env.SEQUELIZEDB);
   try {
       await sequelize.authenticate();
       console.log('Connection has been established successfully.');

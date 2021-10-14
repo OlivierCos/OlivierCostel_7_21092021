@@ -1,0 +1,18 @@
+.profil_page_element{
+    display: flex;
+    justify-content: space-between;
+    padding: 0 4rem 0 2rem;
+    align-items: center;
+}
+
+.profil_page_btn{
+    flex-direction: column;
+}
+
+.profil_page_h1{
+    text-align: center;
+}
+
+.remove_profil_btn{
+    margin-top: 2rem;
+}

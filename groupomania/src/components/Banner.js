@@ -10,7 +10,6 @@ function Banner() {
 	const token = window.localStorage.getItem('token');
 
 if(!token) {
-   // do something with the sideBar
    return [
 	<div className='banner'>
 			<img src={logos} alt='logo-groupomania' className='img_banner_logo' />
@@ -25,13 +24,13 @@ else {
 	return <div className='banner'>
 	<img src={logos} alt='logo-groupomania' className='img_banner_logo' />
 	<div className='btns'>
-		<button className='btn btn_home'><Link to="/Home">Home Icone</Link></button>
-		<button className='btn btn_profile'><Link to="/Profile">Profil icone</Link></button>
-		<button className='btn btn_disconnect' onClick={(e) => {
+		<Link to="/Home"><i className="fas fa-home"></i></Link>
+		<Link to="/Profil"><i className="fas fa-user-circle"></i></Link>
+			<Link to="/login"><i className="fas fa-power-off" onClick={() => {
 				window.localStorage.removeItem('token');
+				window.localStorage.removeItem('userAdmin');
 				window.localStorage.removeItem('userId')
-  				}}>
-			<Link to="/login">Déconnexion</Link></button>
+  				}}></i></Link>
 	</div>
 </div>
 }

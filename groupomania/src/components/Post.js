@@ -1,6 +1,7 @@
 import '../styles/Post.css';
 import React, { useState } from "react";
 
+
 function Post() {
     const [title, newTitle] = useState("")
     const [description, newDescription] = useState("")

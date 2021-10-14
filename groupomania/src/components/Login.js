@@ -20,7 +20,8 @@ function Login() {
             (res) => {
                 console.log(res)
                 localStorage.setItem('token', res.token)
-                localStorage.setItem('userId', res.userId);
+                localStorage.setItem('userId', res.userId)
+                localStorage.setItem('userAdmin', res.userAdmin)
             })
           .then(() => {
             window.location.href = "/home";

@@ -1,57 +1,25 @@
 import '../styles/Home.css';
 import React, { useEffect, useState } from "react";
 import { Link } from 'react-router-dom';
-// import { post } from '../../../backend/app';
-// import { post } from '../../../backend/app';
-// import ButtonDelete from './Buttons';
+import Moment from 'react-moment';
+
 
 function Home() {
 
-    //GET POSTS
-    const [listPosts, setPosts] = useState([]);
-    useEffect ( () => {
+//GET POSTS
+    const getAllPost = () => {
         fetch("http://localhost:3000/api/posts/", {
             headers: { 
             Authorization:'Bearer '+localStorage.getItem('token'),
             'Content-Type': 'application/json'
          } })
-            .then(res => res.json()) 
-            .then(data => setPosts(data))}, [])
-
-// GET COMMENTS
-    const [listComments, setComments] = useState([]);
-    useEffect ( () => {
-        fetch("http://localhost:3000/api/comments/", {
-            headers: { 
-                Authorization:'Bearer '+localStorage.getItem('token'),
-                'Content-Type': 'application/json',
-            },})
-            .then(res => res.json()) 
-            .then(data => setComments(data))}, [])
+            .then(res => res.json())
+            .then(data => setPosts(data))}
     
-    
-   //POST COMMENTS 
-    const [comment, newComment] = useState("")
-    const addComment = (e, id) => {
-        e.preventDefault()
-            const data = {comment: comment } 
-                fetch("http://localhost:3000/api/comments/" + id, {
-            method: 'POST',
-            body: JSON.stringify(data),
-            headers: {
-                Authorization:'Bearer '+localStorage.getItem('token'),
-                'Content-Type': 'application/json',
-            },})
-                .then((res) => res.json())
-                .then(() => {
-            window.location.href = "/home";
-            })
-                .catch( (error) => {
-                    alert(error)
-        })
-    }
+    const [listPosts, setPosts] = useState([]);
+    useEffect ( getAllPost , [])
 
-//DELETE COMMENTS
+//DELETE POST
 
     const deletePost = (e, id) => {
         e.preventDefault()
@@ -63,81 +31,148 @@ function Home() {
             },})
                 .then((res) => res.json())
                 .then(() => {
-            window.location.href = "/home";
-            })
+                    getAllPost();})
                 .catch( (error) => {
                     alert(error)
         })
     }
 
+//MODIFY POST
+    const [visible, setVisible] = useState(false);
+    const [title, modifyTitle] = useState("")
+    const [description, modifyDescription] = useState("")
+    const [gif, modifyGif] = useState("")
+    const modifyPost = (e, id) => {
+        e.preventDefault()
+        const data = {title: title, description: description, gif: gif } 
+                fetch("http://localhost:3000/api/posts/" + id, {
+            method: 'PUT',
+            body: JSON.stringify(data),
+            headers: {
+                Authorization:'Bearer '+localStorage.getItem('token'),
+                'Content-Type': 'application/json',
+            },})
+                .then((res) => res.json())
+                .then(() => {
+                    window.location.href = "/home";
+                    })
+                .catch( (error) => {
+                    alert(error)
+        })
+    }
 
-    // <button onClick={ e => deletePost(e, post.id) } className="btn revome_post_btn">Supprimer votre publication </button>
+// GET COMMENTS
 
-//     const ButtonDelete = (post) => {
-    // const userId = window.localStorage.getItem('userId');
-//     if (post.UserId === userId) {
-//             <button onClick={ e => deletePost(e, post.id) } className="btn revome_post_btn">Supprimer votre publication </button>
-//     } else {
-        
-//     }
-// }
-//     // id={ post.UserId===userId ? 'remove_post_btn' : null }
+const getAllComment = () => {
+    fetch("http://localhost:3000/api/comments/", {
+    headers: { 
+        Authorization:'Bearer '+localStorage.getItem('token'),
+        'Content-Type': 'application/json',
+    },})
+    .then(res => res.json())  
+    .then(data => setComments(data))}
 
-    //     post.PostId === userId
-    // }
-  
-//        function DeleteButton(post) {
-//         const userId = window.localStorage.getItem('userId');
-//     if(post.UserId === userId) {
-//         return [ 
-//             <button id="remove_post_btn" onClick={ e => deletePost(e, post.id) } className="btn revome_post_btn">Supprimer votre publication </button>
-//         ]
-//     }
-//     else {}
-// }
-    // }
-    // else {
-    //     return null
-    // }}
+const [listComments, setComments] = useState([]);
+useEffect ( getAllComment, [])
+
+
+//POST COMMENTS 
+const [comment, newComment] = useState("")
+const addComment = (e, id) => {
+    e.preventDefault()
+        const data = {comment: comment } 
+            fetch("http://localhost:3000/api/comments/" + id, {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {
+            Authorization:'Bearer '+localStorage.getItem('token'),
+            'Content-Type': 'application/json',
+        },})
+            .then((res) => res.json())
+            .then(() => {
+        window.location.href = "/home";
+        })
+            .catch( (error) => {
+                alert(error)
+    })
+}
+
+//DELETE COMMENT
+
+const deleteComment = (e, id) => {
+    e.preventDefault()
+            fetch("http://localhost:3000/api/comments/" + id, {
+        method: 'DELETE',
+        headers: {
+            Authorization:'Bearer '+localStorage.getItem('token'),
+            'Content-Type': 'application/json',
+        },})
+            .then((res) => res.json())
+            .then(() => {
+                getAllComment();})
+            .catch( (error) => {
+                alert(error)
+    })
+}
+
+
     return (
         <div className='home_page'>
         <button className='btn btn_link_post'><Link to="/post">Publier un gif</Link></button>
         <ul className="app_body">
             { listPosts.map( (post, id) => {
-                return <li key={id} className="app_post">
+                return <li key={id} className="app_post">                   
                     <div className="post_title">
-                        <h3>{post.title}</h3>
-                        <p>Posté par Jean Michel{post.firstName} {post.lastName}</p>
+                        <h3>{post.title}</h3>                        
+                        <div className="post_date">
+                            <p>Posté le <Moment format="D MMM YYYY">{post.createdAt}</Moment></p>
+                            <p>par {post.User.firstName} {post.User.lastName}</p>
+                        </div>
                     </div>
                     <img className="post_gif" src={post.gif} alt=""/>
                     <div className="post_body">
                         Légende : {post.description}
                     </div>
-        
-                    {/* <div id={ post.PostId===userId ? 'remove_post_div' : null } className="remove_post_div"> */}
-                    {/* {  post.UserId===userId ? ( */}
-                    <button onClick={ e => deletePost(e, post.id) } className="btn revome_post_btn">Supprimer votre publication </button>
-                     {/* ) : ( null )
-                     } */}
-                    {/* </div> */}
-                    <div className="post_date">
-                    <p>Post créé le {post.createdAt.slice(0,10)}</p>
-                    </div>
+                    {( localStorage.getItem('userId') === post.User.id.toString() || localStorage.getItem('userAdmin') === 'true') &&
+                        <React.Fragment>
+                            <button onClick={ e => deletePost(e, post.id) } className="fa fa-trash btn revome_post_btn"> </button>                   
+                            <button onClick={ () => setVisible(!visible)} className="btn btn_home revome_post_btn">{visible ? 'X' : 'Modifiez votre publication'} </button> 
+                        </React.Fragment>
+                    }
+                    {visible && 
+                    <form id="app_modify_post" onSubmit={e => modifyPost(e, post.id)} className="app_post app_add_post">
+                        <h1 className="add_post_h1">Modifiez votre Gif :</h1>
+                        <div className="app_post_form">
+                            <label htmlFor="title" className="add_post_title">Votre Titre : </label>
+                            <input className="input_form input_form_title" placeholder="Modifiez votre titre" maxLength="50" type="text" id="title" name="title" value={title} onChange={e => modifyTitle(e.target.value)}/>
+                            <label htmlFor="description" className="add_post_description">Légende : </label>
+                            <textarea className="input_form input_form_description" placeholder="Modifiez la légende" maxLength="250" type="text" id="comment" name="comment" value={description} onChange={e => modifyDescription(e.target.value)}/>
+                            <label htmlFor="gif" className="add_post_gif">Lien du Gif : </label>
+                            <input className="input_form" placeholder="https://" type="url" id="gif" name="gif" value={gif} onChange={e => modifyGif(e.target.value)}/>
+                        </div>
+                        <button className="btn btn_add_post">Modifier le post !</button>
+                    </form>
+                    }
                     <form onSubmit={e => addComment(e, post.id)} className="add_comment">
                         <div className="add_comment_form">
                             <label htmlFor="comment"></label>
-                            <input className="input_form_comment" placeholder="Ajoutez un commentaire !" maxLength="250" type="text" id="comment" name="comment" value={comment} onChange={e => newComment(e.target.value)}/>
+                            <input className="input_form_comment" placeholder="Ajoutez un commentaire !" minLength="2" maxLength="250" type="text" id="comment" name="comment" value={comment} onChange={(e) => newComment(e.target.value)}/>
                         </div>
-                        <button className="btn add_comment_btn">Commenter !</button>
+                        <button className="btn btn_home add_comment_btn">Commenter !</button>
                     </form>
                     <ul className="comments">
                         { listComments.filter((comment)=> comment.PostId === post.id).map( (comment, id) => {
                             return <li key={id} className="display_comment">
-                                <h4 className="comment_name"> Jean Michel {comment.firstName} {comment.lastName} </h4>
-                                <h5 className="comment_date">Commentaire écrit le {comment.createdAt.slice(0,10)}</h5>
+                                <h4 className="comment_name"> {comment.User.firstName} {comment.User.lastName} </h4>
+                                <h5 className="comment_date">Commentaire écrit le <Moment format="D MMM YYYY">{comment.createdAt}</Moment></h5>
                                 <div className="comment_body">
                                     {comment.comment}
-                                </div>                
+                                </div>
+                                {( localStorage.getItem('userId') === comment.User.id.toString() || localStorage.getItem('userAdmin') === 'true') &&
+                                <React.Fragment> 
+                                 <button onClick={ e => deleteComment(e, comment.id) } className="fa fa-trash btn revome_post_btn"> </button>                       
+                                </React.Fragment>
+                                }
                             </li>    
                         }) }
                     </ul>
