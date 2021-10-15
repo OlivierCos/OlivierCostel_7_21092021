@@ -14,6 +14,7 @@ Le projet consiste à construire un réseau social interne pour les employés de
 4. Puis exécutez node server
 5. Exécutez dans un autre terminal à partir du dossier groupomania "npm install"
 6. Puis exécutez npm start
+7. Acceptez de lancer le dossier groupomania sur le port 3001
 
 Il vous faudra rajouter un dossier 'images' dans le dossier backend qui permettra d'enregistrer l'image d'un utilisateur.
 
