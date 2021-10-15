@@ -1,5 +1,8 @@
 import '../styles/Login.css';
 import React, { useState } from "react";
+const dotenv = require("dotenv");
+
+dotenv.config({ path: "../../.env" });
 
 function Login() {
     const [email, setEmail] = useState("")
@@ -8,7 +11,7 @@ function Login() {
     const handleSubmit = e => {
         e.preventDefault()
         const data = {email: email, password: password}
-        fetch("http://localhost:3000/api/users/login", {
+        fetch(process.env.REACT_APP_URLAPI + "/api/users/login", {
             method: 'POST',
             body: JSON.stringify(data),
             headers: { 'Content-Type': 'application/json'}

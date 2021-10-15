@@ -1,8 +1,13 @@
 import '../styles/Signup.css';
 import React, { useState } from "react";
 import { validName, validEmail, validPassword } from './ValideRegex.js';
+const dotenv = require("dotenv");
+
+dotenv.config({ path: "../../.env" });
 
 function Signup() {
+    
+
     const [firstName, newFirstName] = useState("")
     const [lastName, newLastName] = useState("")
     const [email, newEmail] = useState("")
@@ -13,7 +18,6 @@ function Signup() {
     const [pwdErr, setPwdErr] = useState(false);
     const [emailErr, setEmailErr] = useState(false);
     const validate = () => {
-        console.log(firstName);
         let isValid = true;
         if (!validName.test(firstName)) {
            setFirstNameErr(true);
@@ -41,7 +45,7 @@ function Signup() {
         if (isValid) {
             const data = {firstName: firstName, lastName: lastName, email: email, password: password, image: image} 
 
-            fetch("http://localhost:3000/api/users/signup", {
+            fetch(process.env.REACT_APP_URLAPI + "/api/users/signup", {
                 method: 'POST',
                 body: JSON.stringify(data),
                 headers: { 'Content-Type': 'application/json' },
@@ -62,18 +66,18 @@ function Signup() {
                 <div className="app_login_form">
                         <label htmlFor="firstName" className="label_login_form">Prénom : </label>
                         <input className="input_form input_login_form" placeholder="Inscrivez votre prénom" type="text" id="firstName" value={firstName} onChange={e => newFirstName(e.target.value)}/>
-                        {firstNameErr && <p>Votre prénom est invalide</p>}
+                        {firstNameErr && <p>Impossible d'enregistrer ce prénom</p>}
                         <label htmlFor="lastName" className="label_login_form">Nom : </label>
                         <input className="input_form input_login_form" placeholder="Inscrivez votre nom de famille" type="text" id="lastName" value={lastName} onChange={e => newLastName(e.target.value)}/>
-                        {lastNameErr && <p>Votre nom est invalide</p>}
+                        {lastNameErr && <p>Impossible d'enregistrer ce nom</p>}
                         <label htmlFor="email" className="label_login_form">Email : </label>
                         <input className="input_form input_login_form" placeholder="Inscrivez votre email" type="text" id="email" value={email} onChange={e => newEmail(e.target.value)}/>
                         {emailErr && <p>Votre email est invalide</p>}
                         <label htmlFor="password" className="label_login_form">Mot de passe : </label>
                         <input className="input_form input_login_form" placeholder="Inscrivez votre Mot de passe" type="password" id="password" value={password} onChange={e => newPassword(e.target.value)}/>
-                        {pwdErr && <p>Votre mot de passe est invalide</p>}
+                        {pwdErr && <p>Votre mot de passe doit comporter au moins 8 caractères dont un chiffre</p>}
                         <label htmlFor="image" className="label_login_form">Image : </label>
-                        <input className="input_form input_login_form" type="text" id="image" value={image} onChange={e => newImage(e.target.value)}/>
+                        <input className="input_form input_login_form" type="file" id="image" value={image} onChange={e => newImage(e.target.value)}/>
                 </div>
                 <button className="btn btn_login_form">S'inscrire</button>
 

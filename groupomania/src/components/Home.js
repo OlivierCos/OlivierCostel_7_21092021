@@ -2,13 +2,15 @@ import '../styles/Home.css';
 import React, { useEffect, useState } from "react";
 import { Link } from 'react-router-dom';
 import Moment from 'react-moment';
+const dotenv = require("dotenv");
+dotenv.config({ path: "../../.env" });
 
 
 function Home() {
 
 //GET POSTS
     const getAllPost = () => {
-        fetch("http://localhost:3000/api/posts/", {
+        fetch(process.env.REACT_APP_URLAPI + "/api/posts/", {
             headers: { 
             Authorization:'Bearer '+localStorage.getItem('token'),
             'Content-Type': 'application/json'
@@ -23,7 +25,7 @@ function Home() {
 
     const deletePost = (e, id) => {
         e.preventDefault()
-                fetch("http://localhost:3000/api/posts/" + id, {
+                fetch(process.env.REACT_APP_URLAPI + "/api/posts/" + id, {
             method: 'DELETE',
             headers: {
                 Authorization:'Bearer '+localStorage.getItem('token'),
@@ -46,7 +48,7 @@ function Home() {
     const modifyPost = (e, id) => {
         e.preventDefault()
         const data = {title: title, description: description, gif: gif } 
-                fetch("http://localhost:3000/api/posts/" + id, {
+                fetch(process.env.REACT_APP_URLAPI + "/api/posts/" + id, {
             method: 'PUT',
             body: JSON.stringify(data),
             headers: {
@@ -65,7 +67,7 @@ function Home() {
 // GET COMMENTS
 
 const getAllComment = () => {
-    fetch("http://localhost:3000/api/comments/", {
+    fetch(process.env.REACT_APP_URLAPI + "/api/comments/", {
     headers: { 
         Authorization:'Bearer '+localStorage.getItem('token'),
         'Content-Type': 'application/json',
@@ -82,7 +84,7 @@ const [comment, newComment] = useState("")
 const addComment = (e, id) => {
     e.preventDefault()
         const data = {comment: comment } 
-            fetch("http://localhost:3000/api/comments/" + id, {
+            fetch(process.env.REACT_APP_URLAPI + "/api/comments/" + id, {
         method: 'POST',
         body: JSON.stringify(data),
         headers: {
@@ -102,7 +104,7 @@ const addComment = (e, id) => {
 
 const deleteComment = (e, id) => {
     e.preventDefault()
-            fetch("http://localhost:3000/api/comments/" + id, {
+            fetch(process.env.REACT_APP_URLAPI + "/api/comments/" + id, {
         method: 'DELETE',
         headers: {
             Authorization:'Bearer '+localStorage.getItem('token'),

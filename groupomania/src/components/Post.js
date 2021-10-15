@@ -1,5 +1,8 @@
 import '../styles/Post.css';
 import React, { useState } from "react";
+const dotenv = require("dotenv");
+
+dotenv.config({ path: "../../.env" });
 
 
 function Post() {
@@ -11,7 +14,7 @@ function Post() {
         e.preventDefault()
         const data = {title: title, description: description, gif: gif } 
  
-        fetch("http://localhost:3000/api/posts/", {
+        fetch(process.env.REACT_APP_URLAPI + "/api/posts/", {
             method: 'POST',
             body: JSON.stringify(data),
             headers: {
