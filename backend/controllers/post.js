@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 
 exports.createPost = (req, res, next) => {
   const token = req.headers.authorization.split(' ')[1];
-  const decodedToken = jwt.verify(token, process.env.TOKEN); // On vérifie le token décodé avec la clé secrète (créée dans Controller/User)
+  const decodedToken = jwt.verify(token, process.env.TOKEN); 
   const userId = decodedToken.userId;
       models.Post.create({
       UserId : userId,
@@ -17,7 +17,7 @@ exports.createPost = (req, res, next) => {
 
 exports.modifyPost = async (req, res, next) => {
   const token = req.headers.authorization.split(' ')[1];
-  const decodedToken = jwt.verify(token, process.env.TOKEN); // On vérifie le token décodé avec la clé secrète (créée dans Controller/User)
+  const decodedToken = jwt.verify(token, process.env.TOKEN); 
   const userId = decodedToken.userId;
   const user = await models.User.findOne({  where: { id: userId }});
   if (user.admin){
@@ -44,7 +44,7 @@ exports.modifyPost = async (req, res, next) => {
 
 exports.deletePost = async (req, res, next) => {
   const token = req.headers.authorization.split(' ')[1];
-  const decodedToken = jwt.verify(token, process.env.TOKEN); // On vérifie le token décodé avec la clé secrète (créée dans Controller/User)
+  const decodedToken = jwt.verify(token, process.env.TOKEN); 
   const userId = decodedToken.userId;
   const user = await models.User.findOne({  where: { id: userId }});
   if (user.admin){
@@ -53,9 +53,8 @@ exports.deletePost = async (req, res, next) => {
     .then(() => res.status(200).json({ message: 'Post supprimé !'}))
     .catch((error) => res.status(400).json({ error }));
   }
-  else { models.Post.destroy({ where: { id: req.params.id, UserId: userId }})
-    .then(async() => { await models.Comment.destroy(
-      { where: { PostId: req.params.id }});
+  else { await models.Comment.destroy({ where: { PostId: req.params.id }})
+    .then(async() => {  models.Post.destroy({ where: { id: req.params.id, UserId: userId }})
       res.status(200).json({ message: 'Post supprimé !'})
     })
     .catch((error) => res.status(400).json({ error }));

@@ -1,10 +1,14 @@
 .banner {
-    display: flex;
-    justify-content: space-between;
     width: 100%;
     margin: 0 auto;
     background-color: rgb(255, 236, 236);
     padding: 2rem 0;
+}
+.banner_componants{
+    justify-content: space-between;
+    text-align: center;
+    max-width: 1600px;
+    margin: 0 auto;
 }
 .banner div{
     padding: 0 3rem;
@@ -15,36 +19,40 @@
 a {
     text-decoration: none;
     font-family: "Montserrat", sans-serif;
-    color: #FE8167FF;
+    color: #E72200FF;
 }
 
 .fas {
     font-size: 2.2rem;
     border: none;
-
 text-decoration: none;
 background-color: transparent;
 font-weight: 600;
 cursor: pointer;
 transition: 0.4s ease-out;
 margin-left: 1rem;
-color: #FE8167FF;
+color: #DA0E00FF;
 }
 
 .fas:hover {
     transition: 500ms;
     transform: scale(1.2);
 }
+.fa-power-off{
+    margin-left: 3rem;
+}
+
 .btn {
     text-decoration: none;
     background-color: transparent;
-    border: solid 2px #FE8167FF;
+    border: solid 2px #E72200FF;
     border-radius: 50px;
     padding: 0.4rem 0.8rem;
     font-weight: 600;
     cursor: pointer;
     transition: 0.4s ease-out;
     margin-left: 1rem;
+    color: #E72200FF;
   }
 
 .btn:hover a{
@@ -68,8 +76,23 @@ color: #FE8167FF;
 	width: 145px;
 }
 
-@media screen and (min-width: 1024px) {
+
+@media screen and (max-width: 600px) {
+.banner div{
+    padding: 0 0.8rem;
+}
 .img_banner_logo {
-    margin-left:  0;
+    padding-left: 0;
+    height: 45px;
+	width: 115px;
+}
+.fas {
+    font-size: 1rem;
+}
+}
+@media screen and (max-width: 500px){
+.banner_login{
+    display: flex;
+    flex-direction: column!important;
 }
 }

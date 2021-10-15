@@ -20,8 +20,8 @@ function App() {
 	return (
 		<div className='body_app'>
 			<Router history={history}>
-			<Banner>
-			</Banner>
+				<Banner>
+				</Banner>
 				<Route path='/' exact component={Login}/>
 				<Route path='/home' exact component={Home}/>
 				<Route path='/login' exact component={Login}/>

@@ -1,6 +1,7 @@
 .app_body{
     width : 70%;
     margin: 0 auto;
+    padding: 0;
 }
 
 .app_post, .app_login {
@@ -10,6 +11,24 @@
     padding: 0.4rem 0.8rem;
     margin : 2rem auto;
     background-color: rgb(255, 249, 249);
+  }
+  .comment_btn_remove{
+      padding-right: 3rem;
+  }
+  .display_comment{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+  }
+  .btn_modif_remove{
+  display: flex;
+    justify-content: space-around;
+    padding: 0.5rem 0;
+  }
+
+  .app_modfiy_post{
+      margin-top: 1rem;
+      text-align: center;
   }
 
 .btn_home{
@@ -45,7 +64,7 @@ li{
 .post_gif{
     display: flex;
     margin: 0 auto;
-    max-width: 450px;
+    width: 80%;
     border-radius: 1rem;
     margin-bottom: 1rem ;
 }
@@ -79,29 +98,71 @@ text-align: right;
 }
 .display_comment{
 align-items: center;
+margin-bottom: 1rem;
 }
 .display_comment p{
 font-weight: 600;
 }
 .comment_date{
     font-weight: 400;
+    font-style: italic;
 }
 .comment_name, .comment_date {
     margin:0
 }
 .comment_body {
-    margin : 0.4rem 0 0.8rem 0;
+    margin-top : 0.4rem;
 }
 .comments{
     margin-top: 1rem;
 }
 .add_comment_btn, .revome_post_btn, .btn_add_post{
-    color: #FE8167FF;
+    color: #E72200FF;
     background-color: rgb(255, 236, 236);
 }
 .add_comment_btn:hover, .revome_post_btn:hover, .btn_add_post:hover{
     color: black;
 }
-/* .add_comment div, .add_comment button{
-    display: inline-block;
-} */
+
+@media screen and (max-width: 700px) {
+.post_title{
+    padding: 0 0.5rem;
+}
+.post_title h3{
+    font-size: 1rem;
+}
+}
+@media screen and (max-width: 600px) {
+    .app_body{
+    width: 90%;
+    }
+    }
+    @media screen and (max-width: 500px) {
+        .post_body{
+font-size: 0.8rem;
+        }
+        .comments{
+            padding: 0;
+        }
+        .comment_body, .comment_name{
+            font-size: 0.8rem;
+        }
+        .comment_date{
+            font-size: 0.7rem;
+        }
+        }
+@media screen and (max-width: 400px) {
+    .add_comment_btn{
+        font-size: 0.7rem;
+        padding: 0.2rem 0.3rem;
+    }
+    .post_title{
+        flex-direction: column;
+    }
+    .post_date{
+        display: flex;
+        flex-direction: row;
+        width: 90%;
+        justify-content: space-between;
+    }
+}

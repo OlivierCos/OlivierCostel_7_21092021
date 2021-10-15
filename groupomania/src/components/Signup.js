@@ -2,7 +2,6 @@ import '../styles/Signup.css';
 import React, { useState } from "react";
 import { validName, validEmail, validPassword } from './ValideRegex.js';
 const dotenv = require("dotenv");
-
 dotenv.config({ path: "../../.env" });
 
 function Signup() {

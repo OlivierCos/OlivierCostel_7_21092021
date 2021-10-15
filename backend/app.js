@@ -1,16 +1,14 @@
-const express = require('express');  // Framework basé sur Node (Express représente l'infrastructure de serveur d'applications Web)
-const path = require('path'); // Pour retrouver les répertoires et chemins des fichiers images
+const express = require('express'); 
+const path = require('path');
 const helmet = require('helmet'); // utilisation du module 'helmet' pour la sécurité en protégeant l'application de certaines vulnérabilités
 const { Sequelize } = require('sequelize');
 const postRoutes = require('./routes/post.js');
 const userRoutes = require('./routes/user.js');
 const commentRoutes = require('./routes/comment.js');
 
-
-// utilisation du module 'dotenv' pour masquer les informations de connexion à la base de données à l'aide de variables d'environnement
 require('dotenv').config();
 
-const app = express(); //  L'application utilise le framework express
+const app = express();
 
 app.get('/', async function (req, res) {
       const sequelize = new Sequelize(proces.env.SEQUELIZEDB);
@@ -33,12 +31,11 @@ app.use((req, res, next) => {
     next();
   });
 
-//Remplace body-parser, qui est désormais integré à express, cela permet d'extraire l'objet JSON des requêtes POST
 app.use(express.urlencoded({extended: true})); 
 app.use(express.json());
 app.use(helmet());
 
-app.use('/images', express.static(path.join(__dirname, 'images'))); // Gestion de l'image de façon statique, pour que le client télécharge les images du server
+app.use('/images', express.static(path.join(__dirname, 'images'))); 
 app.use('/api/posts', postRoutes);
 app.use('/api/comments', commentRoutes);
 app.use('/api/users', userRoutes);

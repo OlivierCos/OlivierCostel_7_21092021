@@ -54,7 +54,7 @@ exports.login = (req, res, next) => {
 
     exports.modifyUser = async (req, res, next) => {
       const token = req.headers.authorization.split(' ')[1];
-      const decodedToken = jwt.verify(token, process.env.TOKEN); // On vérifie le token décodé avec la clé secrète (créée dans Controller/User)
+      const decodedToken = jwt.verify(token, process.env.TOKEN); 
       const userId = decodedToken.userId;
       const user = await models.User.findOne({  where: { id: userId }});
       if (user.admin){
@@ -132,7 +132,7 @@ exports.login = (req, res, next) => {
     
     exports.deleteUser = async (req, res, next) => {
       const token = req.headers.authorization.split(' ')[1];
-      const decodedToken = jwt.verify(token, process.env.TOKEN); // On vérifie le token décodé avec la clé secrète (créée dans Controller/User)
+      const decodedToken = jwt.verify(token, process.env.TOKEN);
       const userId = decodedToken.userId;
       const user = await models.User.findOne({  where: { id: userId }});
   if (user.admin){
@@ -182,7 +182,7 @@ exports.login = (req, res, next) => {
 
     exports.getOneUser = async(req, res, next) => {
       const token = req.headers.authorization.split(' ')[1];
-      const decodedToken = jwt.verify(token, process.env.TOKEN); // On vérifie le token décodé avec la clé secrète (créée dans Controller/User)
+      const decodedToken = jwt.verify(token, process.env.TOKEN);
       const userId = decodedToken.userId;
       const user = await models.User.findOne({  where: { id: userId }});
       if (user.admin){ models.User.findAll({order: [[

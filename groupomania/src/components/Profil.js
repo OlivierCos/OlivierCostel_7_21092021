@@ -113,7 +113,7 @@ return (
                             <h4>{user.image}</h4>   
                         </div> 
                         <div className="profil_page_element profil_page_btn"> 
-                            <button onClick={() => {setVisible(!visible); setFocusUser(user.id)}} className="btn revome_post_btn">{visible ? 'X' : 'Modifiez votre profil'} </button>
+                            <button onClick={() => {setVisible(!visible); setFocusUser(user.id)}} className="btn btn_profile revome_post_btn">{visible ? 'Annulez la modification!' : 'Modifiez votre profil'} </button>
                                 {visible && focusUser === user.id &&
                                 <form id="app_modify_post" onSubmit={e => modifyProfil(e, user.id)} className="app_post app_add_post">
                                     <h1 className="add_post_h1">Modifiez votre Profil :</h1>
@@ -134,10 +134,10 @@ return (
                                         <label htmlFor="image" className="label_login_form">Image : </label>
                                         <input className="input_form input_login_form" type="file" alt='' id="image" value={image} onChange={e => modifyImage(e.target.value)}/>
                                     </div>
-                                    <button className="btn btn_add_post">Modifier votre Profil !</button>
+                                    <button className="btn btn_profile btn_add_post">Modifier votre Profil !</button>
                                 </form>
                                 }
-                            <button onClick={ e => deleteProfil(e, user.id) } className="btn revome_post_btn remove_profil_btn">Supprimer votre profil </button>
+                            <button onClick={ e => deleteProfil(e, user.id) } className="btn revome_post_btn btn_profile remove_profil_btn">Supprimez votre profil </button>
                         </div>   
                     </li>
             })}

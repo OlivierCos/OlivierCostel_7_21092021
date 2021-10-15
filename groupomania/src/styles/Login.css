@@ -17,7 +17,7 @@
 }
 
 .btn_login_form{
-    color: #FE8167FF;
+    color: #E72200FF;
     font-family: "Montserrat", sans-serif;
     margin: 2rem 0;
 }
@@ -31,4 +31,13 @@
 }
 .label_login_form{
     padding: 1.5rem 0 0.6rem 0;
+}
+
+@media screen and (max-width: 500px) {
+    .app_login{
+        width: 90%;
+    }
+    .app_login_form{
+        width : 100%
+    }
 }

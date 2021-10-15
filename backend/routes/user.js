@@ -1,6 +1,6 @@
 const express = require('express');
-const multer = require('../middleware/multer-config.js'); // Middleware pour la gestion des images
-const auth = require('../middleware/auth.js'); // Middleware pour sécuriser les routes via le plugin JsonWebToken
+const multer = require('../middleware/multer-config.js');
+const auth = require('../middleware/auth.js'); 
 const router = express.Router();
 const userCtrl = require('../controllers/user.js');
 

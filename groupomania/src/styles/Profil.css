@@ -16,3 +16,16 @@
 .remove_profil_btn{
     margin-top: 2rem;
 }
+.btn_profile{
+    font-family: "Montserrat", sans-serif;
+}
+
+@media screen and (max-width: 500px) {
+    .profil_page_element{
+        padding: 0 0.2rem;
+        font-size: 0.8rem;
+    }
+    .profil_page_h1{
+        font-size: 1.5rem;
+    }
+}

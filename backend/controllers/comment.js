@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 
 exports.createComment = (req, res, next) => {
   const token = req.headers.authorization.split(' ')[1];
-  const decodedToken = jwt.verify(token, process.env.TOKEN); // On vérifie le token décodé avec la clé secrète (créée dans Controller/User)
+  const decodedToken = jwt.verify(token, process.env.TOKEN); 
   const userId = decodedToken.userId;  
   models.Comment.create({
       PostId: req.params.id,
@@ -16,7 +16,7 @@ exports.createComment = (req, res, next) => {
 
 exports.deleteComment = async (req, res, next) => {
   const token = req.headers.authorization.split(' ')[1];
-  const decodedToken = jwt.verify(token, process.env.TOKEN); // On vérifie le token décodé avec la clé secrète (créée dans Controller/User)
+  const decodedToken = jwt.verify(token, process.env.TOKEN);
   const userId = decodedToken.userId;
   const user = await models.User.findOne({  where: { id: userId }});
   if (user.admin){
