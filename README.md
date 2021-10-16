@@ -34,11 +34,17 @@ npx sequelize-cli db:migrate
 Valeurs des variables d'environnement à rajouter dans un fichier .env à créer dans le dossier backend
 
 TOKEN=RANDOM_TOKEN_SECRET
+
 SEQUELIZEDB='groupomania', 'root', '', {host: 'localhost', dialect: 'mysql'}
+
 DB_USERNAME=root
+
 DB_PASSWORD=
+
 DB_DATABASE=groupomania
+
 DB_HOST=127.0.0.1
+
 DB_PORT=3308
 
 
