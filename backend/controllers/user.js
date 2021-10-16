@@ -1,8 +1,6 @@
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const models = require('../models');
-const fs = require('fs');
-
 
 exports.signup = (req, res, next) => {
     bcrypt.hash(req.body.password, 10)
@@ -86,12 +84,12 @@ exports.login = (req, res, next) => {
       const userId = decodedToken.userId;
       const user = await models.User.findOne({  where: { id: userId }});
   if (user.admin){
-      models.Comment.destroy({ where: { UserId: req.params.id }}),
-      models.Post.destroy({ where: { UserId: req.params.id }}),
-      models.User.destroy({ where: { id: req.params.id }})
-      .then(() => res.status(200).json({ message: 'Utilisateur supprimé !'}))
-      .catch((error) => res.status(400).json({ error }))
-    }
+        models.Comment.destroy({ where: { UserId: req.params.id }}),
+        models.Post.destroy({ where: { UserId: req.params.id }}),
+        models.User.destroy({ where: { id: req.params.id }})
+        .then(() => res.status(200).json({ message: 'Utilisateur supprimé !'}))
+        .catch((error) => res.status(400).json({ error }))
+      }
   else { 
       models.User.destroy({ where: { id: userId }})
     .then(async() => { await 

@@ -15,7 +15,6 @@ app.get('/', async function (req, res) {
   } catch (error) {
       console.error('Unable to connect to the database:', error);
   }
-  
   res.setHeader('Content-Type', 'text/html');
   res.status(200).send('Ca marche');
   });
@@ -35,6 +34,5 @@ app.use(helmet());
 app.use('/api/posts', postRoutes);
 app.use('/api/comments', commentRoutes);
 app.use('/api/users', userRoutes);
-
 // Export de l'application express pour déclaration dans server.js
 module.exports = app;

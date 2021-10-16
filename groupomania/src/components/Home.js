@@ -200,8 +200,5 @@ const deleteComment = (e, id) => {
        </ul>
        </div>
     )
-        
 }
-
-
 export default Home;

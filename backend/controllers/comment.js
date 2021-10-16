@@ -35,7 +35,7 @@ exports.getAllComment = (req, res, next) => {
   models.Comment.findAll({   
     include: [{
       model: models.User,
-      attributes: ['firstName', 'lastName', 'id', 'image'] 
+      attributes: ['firstName', 'lastName', 'id'] 
     }],
   order: [[
     "createdAt", "DESC"
