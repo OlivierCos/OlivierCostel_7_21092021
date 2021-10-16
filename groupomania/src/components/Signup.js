@@ -6,7 +6,6 @@ dotenv.config({ path: "../../.env" });
 
 function Signup() {
     
-
     const [firstName, newFirstName] = useState("")
     const [lastName, newLastName] = useState("")
     const [email, newEmail] = useState("")
@@ -56,27 +55,11 @@ function Signup() {
             })
         }};
 
-
-        const newImage = (files) => {
-            const file = files[0];
-            const formData = new FormData();
-            formData.append('file', file)
-        }
-
-        const imageSubmit = e => {
-                    fetch(process.env.REACT_APP_URLAPI + "/api/users/signup", {
-                    method: "POST",
-                    headers: { 'Content-Type': 'multipart/form-data'},
-                    body: JSON.stringify(newImage),
-                  })
-                  .then((res) => res.json())
-                  .catch( (error) => alert(error))
-                }
         
 
     return(
         <div className="app_body app_body_login">
-            <form onSubmit={e => {handleSubmit(e) ; imageSubmit(e)}} className="app_login">
+            <form onSubmit={e => handleSubmit(e)} className="app_login">
                 <h1 className="add_post_h1">Inscription</h1>
                 <div className="app_login_form">
                         <label htmlFor="firstName" className="label_login_form">Prénom : </label>
@@ -91,13 +74,8 @@ function Signup() {
                         <label htmlFor="password" className="label_login_form">Mot de passe : </label>
                         <input className="input_form input_login_form" placeholder="Inscrivez votre Mot de passe" type="password" id="password" value={password} onChange={e => newPassword(e.target.value)}/>
                         {pwdErr && <p>Votre mot de passe doit comporter au moins 8 caractères dont un chiffre</p>}
-                        <label htmlFor="image" className="label_login_form">Image : </label>
-                        <input className="input_form input_login_form" type="file" id="image" onChange={(e) => newImage(e.target.files)}/>
                 </div>
                 <button className="btn btn_login_form">S'inscrire</button>
-
-                
-                
             </form>
         </div>
     );
