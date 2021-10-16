@@ -7,18 +7,11 @@ const fs = require('fs');
 exports.signup = (req, res, next) => {
     bcrypt.hash(req.body.password, 10)
     .then(hash => {
-      let imageUrl
-      if (req.body.image) {
-        imageUrl = req.body.image
-      } else {
-        imageUrl = null
-      }
    models.User.create({
         firstName: req.body.firstName,
         lastName: req.body.lastName,
         email: req.body.email,
         password: hash,
-        image: imageUrl
       })
       .then(() => res.status(201).json({ message: 'Utilisateur créé !' }))
       .catch(error => res.status(403).json({ error }));
@@ -58,12 +51,6 @@ exports.login = (req, res, next) => {
       const userId = decodedToken.userId;
       const user = await models.User.findOne({  where: { id: userId }});
       if (user.admin){
-        req.file ? ( 
-          models.User.findOne({ id: req.params.id})
-            .then((user) => {
-              const filename = user.image.split('/images/')[1]
-              fs.unlinkSync(`images/${filename}`)})  
-            .catch(error => res.status(400).json({ error })), 
           bcrypt.hash(req.body.password, 10)
           .then(hash => {
             models.User.update({  
@@ -71,35 +58,13 @@ exports.login = (req, res, next) => {
             lastName: req.body.lastName,
             email: req.body.email,
             password: hash,
-            image: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`},
-            {where: { id: req.params.id }})
-            .then(() => res.status(200).json({ message: 'Utilisateur modifié !'}))
-            .catch(error => res.status(400).json({ error }))
-            })
-          .catch(error => res.status(500).json({ error }))
-        ) : (
-          bcrypt.hash(req.body.password, 10)
-          .then(hash => {
-            models.User.update({  
-            firstName: req.body.firstName,
-            lastName: req.body.lastName,
-            email: req.body.email,
-            password: hash,
-            image: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
-            }, {where: { id: req.params.id }})
+           }, {where: { id: req.params.id }})
             .then(() => res.status(200).json({ message: 'Utilisateur modifié !'}))
             .catch(error => res.status(400).json({ error }))
               })
           .catch(error => res.status(500).json({ error }))
-        )
       }
     else {
-      req.file ? ( 
-        models.User.findOne({ id: userId})
-          .then((user) => {
-            const filename = user.image.split('/images/')[1]
-            fs.unlinkSync(`images/${filename}`)})  
-          .catch(error => res.status(400).json({ error })), 
         bcrypt.hash(req.body.password, 10)
         .then(hash => {
           models.User.update({  
@@ -107,27 +72,12 @@ exports.login = (req, res, next) => {
           lastName: req.body.lastName,
           email: req.body.email,
           password: hash,
-          image: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
-          }, {where: { id: userId }})
-          .then(() => res.status(200).json({ message: 'Utilisateur modifié !'}))
-          .catch(error => res.status(400).json({ error }))
-          })
-        .catch(error => res.status(500).json({ error }))
-      ) : (
-        bcrypt.hash(req.body.password, 10)
-        .then(hash => {
-          models.User.update({  
-          firstName: req.body.firstName,
-          lastName: req.body.lastName,
-          email: req.body.email,
-          password: hash,
-          image: `${req.protocol}://${req.get('host')}/images/${req.file.filename}`
           }, {where: { id: userId }})
           .then(() => res.status(200).json({ message: 'Utilisateur modifié !'}))
           .catch(error => res.status(400).json({ error }))
             })
         .catch(error => res.status(500).json({ error }))
-      )}
+      }
     };
     
     exports.deleteUser = async (req, res, next) => {
@@ -136,39 +86,13 @@ exports.login = (req, res, next) => {
       const userId = decodedToken.userId;
       const user = await models.User.findOne({  where: { id: userId }});
   if (user.admin){
-    req.file ? ( 
-      models.User.findOne({ id: req.params.id})
-        .then((user) => {
-          const filename = user.image.split('/images/')[1]
-          fs.unlinkSync(`images/${filename}`)})  
-        .catch(error => res.status(400).json({ error })),
       models.Comment.destroy({ where: { UserId: req.params.id }}),
       models.Post.destroy({ where: { UserId: req.params.id }}),
       models.User.destroy({ where: { id: req.params.id }})
       .then(() => res.status(200).json({ message: 'Utilisateur supprimé !'}))
       .catch((error) => res.status(400).json({ error }))
-    ) : (
-      models.Comment.destroy({ where: { UserId: req.params.id }}),
-      models.Post.destroy({ where: { UserId: req.params.id }}),
-      models.User.destroy({ where: { id: req.params.id }})
-      .then(() => res.status(200).json({ message: 'Utilisateur supprimé !'}))
-      .catch((error) => res.status(400).json({ error }))
-    )}
+    }
   else { 
-    req.file ? (
-      models.User.findOne({ id: userId})
-        .then((user) => {
-          const filename = user.image.split('/images/')[1]
-          fs.unlinkSync(`images/${filename}`)})  
-        .catch(error => res.status(400).json({ error })),
-      models.User.destroy({ where: { id: userId }})
-      .then(async() => { await 
-        models.Comment.destroy({ where: { UserId: userId }})
-        models.Post.destroy({ where: { UserId: userId }})
-        res.status(200).json({ message: 'Post supprimé !'})
-      })
-      .catch((error) => res.status(400).json({ error }))
-    ) : (
       models.User.destroy({ where: { id: userId }})
     .then(async() => { await 
       models.Comment.destroy({ where: { UserId: userId }})
@@ -176,7 +100,6 @@ exports.login = (req, res, next) => {
       res.status(200).json({ message: 'Post supprimé !'})
     })
     .catch((error) => res.status(400).json({ error }))
-    )
 }};
 
 

@@ -44,7 +44,6 @@ const [firstName, modifyFirstName] = useState("")
 const [lastName, modifyLastName] = useState("")
 const [email, modifyEmail] = useState("")
 const [password, modifyPassword] = useState("")
-const [image, modifyImage] = useState("")
 const [firstNameErr, setFirstNameErr] = useState(false);
     const [lastNameErr, setLastNameErr] = useState(false);
     const [pwdErr, setPwdErr] = useState(false);
@@ -74,7 +73,7 @@ const modifyProfil = (e, id) => {
     e.preventDefault()
     const isValid = validate();
     if (isValid) {
-        const data = {firstName: firstName, lastName: lastName, email: email, password: password, image: image}                 
+        const data = {firstName: firstName, lastName: lastName, email: email, password: password}                 
         fetch(process.env.REACT_APP_URLAPI + "/api/users/" + id, {
             method: 'PUT',
             body: JSON.stringify(data),
@@ -108,10 +107,6 @@ return (
                             <h3 className="">Votre email : </h3>
                             <h4>{user.email}</h4>                         
                         </div>
-                        <div className="profil_page_element">
-                            <h3 className="">Votre image : </h3>
-                            <h4>{user.image}</h4>   
-                        </div> 
                         <div className="profil_page_element profil_page_btn"> 
                             <button onClick={() => {setVisible(!visible); setFocusUser(user.id)}} className="btn btn_profile revome_post_btn">{visible ? 'Annulez la modification!' : 'Modifiez votre profil'} </button>
                                 {visible && focusUser === user.id &&
@@ -130,10 +125,7 @@ return (
                                         <label htmlFor="password" className="label_login_form">Mot de passe : </label>
                                         <input className="input_form input_login_form" placeholder="Inscrivez votre Mot de passe" type="password" id="password" value={password} onChange={e => modifyPassword(e.target.value)}/>
                                         {pwdErr && <p>Votre mot de passe doit comporter au moins 8 caractères dont un chiffre</p>}
-                                        <img src={user.image} alt=''></img>
-                                        <label htmlFor="image" className="label_login_form">Image : </label>
-                                        <input className="input_form input_login_form" type="file" alt='' id="image" value={image} onChange={e => modifyImage(e.target.value)}/>
-                                    </div>
+                                        </div>
                                     <button className="btn btn_profile btn_add_post">Modifier votre Profil !</button>
                                 </form>
                                 }
