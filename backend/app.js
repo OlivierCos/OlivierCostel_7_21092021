@@ -1,6 +1,7 @@
 const express = require('express'); 
 const helmet = require('helmet'); // utilisation du module 'helmet' pour la sécurité en protégeant l'application de certaines vulnérabilités
 const { Sequelize } = require('sequelize');
+const path = require('path');
 const postRoutes = require('./routes/post.js');
 const userRoutes = require('./routes/user.js');
 const commentRoutes = require('./routes/comment.js');
@@ -8,7 +9,7 @@ require('dotenv').config();
 const app = express();
 
 app.get('/', async function (req, res) {
-      const sequelize = new Sequelize(proces.env.SEQUELIZEDB);
+      const sequelize = new Sequelize(process.env.SEQUELIZEDB);
   try {
       await sequelize.authenticate();
       console.log('Connection has been established successfully.');
@@ -31,6 +32,7 @@ app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 app.use(helmet());
 
+app.use('/images', express.static(path.join(__dirname, 'images'))); 
 app.use('/api/posts', postRoutes);
 app.use('/api/comments', commentRoutes);
 app.use('/api/users', userRoutes);

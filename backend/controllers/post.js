@@ -25,7 +25,7 @@ exports.modifyPost = async (req, res, next) => {
       {title: req.body.title,
       gif: req.body.gif,
       description: req.body.description },
-      {where: { id: req.params.id, UserId: userId }})
+      {where: { id: req.params.id }})
     .then(() => res.status(200).json({ message: 'Post modifié !'}))
     .catch((error) => res.status(400).json({ error }));
   }
@@ -63,7 +63,7 @@ exports.deletePost = async (req, res, next) => {
 exports.getAllPost = (req, res, next) => {
     models.Post.findAll({  include: [{
         model: models.User,
-        attributes: ['firstName', 'lastName', 'id']}],
+        attributes: ['firstName', 'lastName', 'id', 'image']}],
     order: [[
       "createdAt", "DESC"
     ]]})

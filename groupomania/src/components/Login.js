@@ -23,6 +23,7 @@ function Login() {
                 localStorage.setItem('token', res.token)
                 localStorage.setItem('userId', res.userId)
                 localStorage.setItem('userAdmin', res.userAdmin)
+                localStorage.setItem('userImg', res.userImg)
             })
           .then(() => {
             window.location.href = "/home";
